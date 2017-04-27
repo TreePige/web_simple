@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>simple—web</title>
+</head>
+<body>
+<h2>三种发布到tomcat</h2>
+<ul>
+
+<li>1.直接将web项目或者web包放在根目录下的webapps文件下</li>
+<li>2.在server.xml中指定
+这种方式可以不必将PetWeb目录拷贝到webapps下，直接在"D:/myWork"下部署。方法如下，更改$CATALINA_HOME/conf/server.xml文件，
+在Tomcat的配置文件中，一个Web应用就是一个特定的Context, 可以通过在server.xml中新建Context里部署一个JSP应用程序。打开server.xml文件，在Host标签内建立一个Context，内容如下。
+　　在tomcat中的conf目录下，在server.xml中，host/>节点中添加：
+　　Context path="/hellooo" docBase="D:/myWork"debug="0" privileged="true"> /Context>
+<br>（1）path：是访问时的根地址，表示访问的路径；如上述例子中，访问该应用程序地址如下：http://localhost:8080/hellooo/
+<br>（2）docBase是应用程序的物理路径，表示应用程序的路径，注意斜杠的方向“/”。docBase可以使用绝对路径，也可以使用相对路径，相对路径相对于webapps。
+<br>（3）workDir是这个应用的工作目录，存放运行时生成的这个应用相关的文件，表示缓存文件的放置地址
+<br>（4）debug 则是设定debug level, 0表示提供最少的信息，9表示提供最多的信息；
+<br>（5）privileged 设置为true的时候，才允许Tomcat的Web应用使用容器内的Servlet
+<br>（6）reloadable如果为true则tomcat会自动检测应用程序的/WEB-INF/lib  和 /WEB-INF/classes 目录的变化，自动装载新的应用程序，可以再不重启tomcat的情况下改变应用程序，实现热部署 antiResourseLocking 和 antiJARLocking 热部署是需要篇配置的参数，默认false避免更新了某个webapp,有时候Tomcat并不能把旧的webapp完全删除，通常会留下WEB-INF/lib下的某个jar包，必须关闭Tomcat才能删除，这就导致自动部署失败。设置为true，Tomcat在运行对应的webapp时，会把响应的源文件和jar文件复制到一个临时目录里。
+这个方法可以定义别名，服务器端运行的项目名称为path，外部访问的URL则使用XML的文件名。这个方法很方便的隐藏了项目的名称，对一些项目名称被固定不能更换，但外部访问时又想换个路径，非常有效。
+注意： 删除一个Web应用同时也要删除webapps下相应的文件夹和server.xml中相应的Context，还要将Tomcat的conf\Catalinal\localhost目录下相应的xml文件删除，否则Tomcat仍会去配置并加载...</li>
+<li>3.创建一个Context文件
+  在conf目录中，新建 Catalina＼localhost目录，在该目录中新建一个xml文件，名字不可以随意取，要和path后的那个名字一致，按照下边这个path的配置，xml的名字应该就应该是hello（hello.xml），该xml文件的内容为：<br>
+Context path="/hello" docBase="E:\workspace\hello\WebRoot" debug="0" privileged="true"></Context></li>
+</ul>
+<input type="button" value="点了个击的" onclick="javascript:window.location.href='http://localhost:8081/BBQ';"/>
+<a href="www.baidu.com" target="_Blank">baidu</a>
+<a href="#" onclick="javascript:window.open('www.baidu.com');">李彦宏</a>
+<input type="button" value="百度" onclick="jump();"/>
+</body>
+<script>
+	function jump(){
+		window.location.href='http://www.baidu.com';
+	}
+</script>
+</html>
